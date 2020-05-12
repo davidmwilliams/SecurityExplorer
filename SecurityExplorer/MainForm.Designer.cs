@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.FileMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.ExitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +43,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.FolderPath = new System.Windows.Forms.TextBox();
             this.Browse = new System.Windows.Forms.Button();
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.ImageList = new System.Windows.Forms.ImageList(this.components);
             this.MenuBar.SuspendLayout();
             this.Splitter.Panel1.SuspendLayout();
             this.Splitter.Panel2.SuspendLayout();
@@ -98,8 +101,10 @@
             this.FileTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FileTree.Location = new System.Drawing.Point(0, 0);
             this.FileTree.Name = "FileTree";
+            this.FileTree.ShowRootLines = false;
             this.FileTree.Size = new System.Drawing.Size(279, 691);
             this.FileTree.TabIndex = 0;
+            this.FileTree.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FileTree_MouseMove);
             // 
             // StatusBar
             // 
@@ -189,6 +194,12 @@
             this.Browse.UseVisualStyleBackColor = true;
             this.Browse.Click += new System.EventHandler(this.Browse_Click);
             // 
+            // ImageList
+            // 
+            this.ImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.ImageList.ImageSize = new System.Drawing.Size(16, 16);
+            this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -230,6 +241,8 @@
         private System.Windows.Forms.TextBox FolderPath;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox TopLevelOnly;
+        private System.Windows.Forms.ToolTip ToolTip;
+        private System.Windows.Forms.ImageList ImageList;
     }
 }
 

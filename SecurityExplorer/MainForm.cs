@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -14,6 +15,7 @@ namespace SecurityExplorer
         public MainForm()
         {
             InitializeComponent();
+            UpdateFileTree();
         }
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -39,7 +41,71 @@ namespace SecurityExplorer
         // Update the hierarchy on the left with the files and folders from the selected path, along with security info
         private void UpdateFileTree()
         {
-            // TODO
+            StatusLabel.Text = "";
+            FileTree.Nodes.Clear();
+            if ((FolderPath.Text.Trim() != "") && (Directory.Exists(FolderPath.Text)))
+            {
+                LoadDirectory(FolderPath.Text);
+                FileTree.ExpandAll();
+                StatusLabel.Text = "Ready.";
+            }
+            else
+                StatusLabel.Text = "Invalid path.";
+        }
+
+        private void LoadDirectory(string Dir)
+        {
+            var di = new DirectoryInfo(Dir);
+            //             progressBar1.Maximum = Directory.GetFiles(Dir, "*.*", SearchOption.AllDirectories).Length + Directory.GetDirectories(Dir, "**", SearchOption.AllDirectories).Length;  
+            var tds = FileTree.Nodes.Add(di.Name);
+            tds.Tag = di.FullName;
+            tds.StateImageIndex = 0;
+            LoadFiles(Dir, tds);
+            LoadSubDirectories(Dir, tds);
+        }
+
+        private void LoadFiles(string Dir, TreeNode td)
+        {
+            string[] Files = Directory.GetFiles(Dir, "*.*");
+            foreach (string file in Files)
+            {
+                var fi = new FileInfo(file);
+                var tds = td.Nodes.Add(fi.Name);
+                tds.Tag = fi.FullName;
+                tds.StateImageIndex = 1;
+            }
+        }
+
+        private void LoadSubDirectories(string dir, TreeNode td)
+        {
+            string[] subdirectoryEntries = Directory.GetDirectories(dir);
+            foreach (string subdirectory in subdirectoryEntries)
+            {
+                var di = new DirectoryInfo(subdirectory);
+                StatusLabel.Text = di.FullName;
+                Application.DoEvents();
+                var tds = td.Nodes.Add(di.Name);
+                tds.StateImageIndex = 0;
+                tds.Tag = di.FullName;
+                if (!TopLevelOnly.Checked)
+                {
+                    LoadFiles(subdirectory, tds);
+                    LoadSubDirectories(subdirectory, tds);
+                }
+            }
+        }
+
+        // Set a tool tip if the mouse is over a valid node
+        private void FileTree_MouseMove(object sender, MouseEventArgs e)
+        {
+            var theNode = FileTree.GetNodeAt(e.X, e.Y);
+            if (theNode != null && theNode.Tag != null)
+            {
+                if (theNode.Tag.ToString() != ToolTip.GetToolTip(FileTree))
+                    ToolTip.SetToolTip(FileTree, theNode.Tag.ToString());
+            }
+            else
+                ToolTip.SetToolTip(FileTree, "");
         }
     }
 }
