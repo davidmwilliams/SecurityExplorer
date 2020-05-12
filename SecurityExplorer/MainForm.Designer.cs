@@ -37,10 +37,17 @@
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutSecurityExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Options = new System.Windows.Forms.GroupBox();
+            this.TopLevelOnly = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.FolderPath = new System.Windows.Forms.TextBox();
+            this.Browse = new System.Windows.Forms.Button();
             this.MenuBar.SuspendLayout();
             this.Splitter.Panel1.SuspendLayout();
+            this.Splitter.Panel2.SuspendLayout();
             this.Splitter.SuspendLayout();
             this.StatusBar.SuspendLayout();
+            this.Options.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuBar
@@ -78,6 +85,10 @@
             // Splitter.Panel1
             // 
             this.Splitter.Panel1.Controls.Add(this.FileTree);
+            // 
+            // Splitter.Panel2
+            // 
+            this.Splitter.Panel2.Controls.Add(this.Options);
             this.Splitter.Size = new System.Drawing.Size(1028, 691);
             this.Splitter.SplitterDistance = 279;
             this.Splitter.TabIndex = 2;
@@ -120,6 +131,64 @@
             this.aboutSecurityExplorerToolStripMenuItem.Size = new System.Drawing.Size(198, 22);
             this.aboutSecurityExplorerToolStripMenuItem.Text = "About Security Explorer";
             // 
+            // Options
+            // 
+            this.Options.Controls.Add(this.Browse);
+            this.Options.Controls.Add(this.FolderPath);
+            this.Options.Controls.Add(this.label1);
+            this.Options.Controls.Add(this.TopLevelOnly);
+            this.Options.Dock = System.Windows.Forms.DockStyle.Top;
+            this.Options.Location = new System.Drawing.Point(0, 0);
+            this.Options.Name = "Options";
+            this.Options.Size = new System.Drawing.Size(745, 74);
+            this.Options.TabIndex = 0;
+            this.Options.TabStop = false;
+            this.Options.Text = "Options";
+            // 
+            // TopLevelOnly
+            // 
+            this.TopLevelOnly.AutoSize = true;
+            this.TopLevelOnly.Checked = true;
+            this.TopLevelOnly.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TopLevelOnly.Location = new System.Drawing.Point(48, 51);
+            this.TopLevelOnly.Name = "TopLevelOnly";
+            this.TopLevelOnly.Size = new System.Drawing.Size(92, 17);
+            this.TopLevelOnly.TabIndex = 0;
+            this.TopLevelOnly.Text = "Top-level only";
+            this.TopLevelOnly.UseVisualStyleBackColor = true;
+            this.TopLevelOnly.CheckedChanged += new System.EventHandler(this.TopLevelOnly_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 23);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Path";
+            // 
+            // FolderPath
+            // 
+            this.FolderPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.FolderPath.Location = new System.Drawing.Point(48, 19);
+            this.FolderPath.Name = "FolderPath";
+            this.FolderPath.ReadOnly = true;
+            this.FolderPath.Size = new System.Drawing.Size(399, 20);
+            this.FolderPath.TabIndex = 2;
+            this.FolderPath.Text = "C:\\";
+            // 
+            // Browse
+            // 
+            this.Browse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Browse.Location = new System.Drawing.Point(453, 18);
+            this.Browse.Name = "Browse";
+            this.Browse.Size = new System.Drawing.Size(35, 23);
+            this.Browse.TabIndex = 3;
+            this.Browse.Text = "...";
+            this.Browse.UseVisualStyleBackColor = true;
+            this.Browse.Click += new System.EventHandler(this.Browse_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -134,9 +203,12 @@
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.Splitter.Panel1.ResumeLayout(false);
+            this.Splitter.Panel2.ResumeLayout(false);
             this.Splitter.ResumeLayout(false);
             this.StatusBar.ResumeLayout(false);
             this.StatusBar.PerformLayout();
+            this.Options.ResumeLayout(false);
+            this.Options.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -153,6 +225,11 @@
         private System.Windows.Forms.ToolStripMenuItem ExitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutSecurityExplorerToolStripMenuItem;
+        private System.Windows.Forms.GroupBox Options;
+        private System.Windows.Forms.Button Browse;
+        private System.Windows.Forms.TextBox FolderPath;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox TopLevelOnly;
     }
 }
 

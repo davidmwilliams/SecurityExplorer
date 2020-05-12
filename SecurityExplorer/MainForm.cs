@@ -20,5 +20,26 @@ namespace SecurityExplorer
         {
             Application.Exit();
         }
+
+        private void Browse_Click(object sender, EventArgs e)
+        {
+            var fd = new FolderBrowserDialog();
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                FolderPath.Text = fd.SelectedPath;
+                UpdateFileTree();
+            }
+        }
+
+        private void TopLevelOnly_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateFileTree();
+        }
+
+        // Update the hierarchy on the left with the files and folders from the selected path, along with security info
+        private void UpdateFileTree()
+        {
+            // TODO
+        }
     }
 }
