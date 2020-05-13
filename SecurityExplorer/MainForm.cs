@@ -60,6 +60,7 @@ namespace SecurityExplorer
             var tds = FileTree.Nodes.Add(di.Name);
             tds.Tag = di.FullName;
             tds.StateImageIndex = 0;
+            tds.ForeColor = Color.RoyalBlue;
             LoadFiles(Dir, tds);
             LoadSubDirectories(Dir, tds);
         }
@@ -77,6 +78,7 @@ namespace SecurityExplorer
                     Application.DoEvents();
                     var tds = td.Nodes.Add(fi.Name);
                     tds.StateImageIndex = 1;
+                    tds.ForeColor = Color.DarkMagenta;
                     tds.Tag = fi.FullName;
                 }
             }
@@ -99,6 +101,7 @@ namespace SecurityExplorer
                     var tds = td.Nodes.Add(di.Name);
                     tds.StateImageIndex = 0;
                     tds.Tag = di.FullName;
+                    tds.ForeColor = Color.RoyalBlue;
                     if (!TopLevelOnly.Checked)
                     {
                         LoadFiles(subdirectory, tds);
