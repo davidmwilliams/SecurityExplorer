@@ -66,32 +66,49 @@ namespace SecurityExplorer
 
         private void LoadFiles(string Dir, TreeNode td)
         {
-            string[] Files = Directory.GetFiles(Dir, "*.*");
-            foreach (string file in Files)
+            try
             {
-                var fi = new FileInfo(file);
-                var tds = td.Nodes.Add(fi.Name);
-                tds.Tag = fi.FullName;
-                tds.StateImageIndex = 1;
+                var Files = Directory.GetFiles(Dir, "*.*");
+                // var Files = Directory.EnumerateFiles(Dir, "*.*", SearchOption.TopDirectoryOnly);
+                foreach (string file in Files)
+                {
+                    var fi = new FileInfo(file);
+                    StatusLabel.Text = fi.FullName;
+                    Application.DoEvents();
+                    var tds = td.Nodes.Add(fi.Name);
+                    tds.StateImageIndex = 1;
+                    tds.Tag = fi.FullName;
+                }
+            }
+            catch (Exception e)
+            {
+                // TODO: handle in some way
             }
         }
 
         private void LoadSubDirectories(string dir, TreeNode td)
         {
-            string[] subdirectoryEntries = Directory.GetDirectories(dir);
-            foreach (string subdirectory in subdirectoryEntries)
+            try
             {
-                var di = new DirectoryInfo(subdirectory);
-                StatusLabel.Text = di.FullName;
-                Application.DoEvents();
-                var tds = td.Nodes.Add(di.Name);
-                tds.StateImageIndex = 0;
-                tds.Tag = di.FullName;
-                if (!TopLevelOnly.Checked)
+                var subdirectoryEntries = Directory.GetDirectories(dir);
+                foreach (string subdirectory in subdirectoryEntries)
                 {
-                    LoadFiles(subdirectory, tds);
-                    LoadSubDirectories(subdirectory, tds);
+                    var di = new DirectoryInfo(subdirectory);
+                    StatusLabel.Text = di.FullName;
+                    Application.DoEvents();
+                    var tds = td.Nodes.Add(di.Name);
+                    tds.StateImageIndex = 0;
+                    tds.Tag = di.FullName;
+                    if (!TopLevelOnly.Checked)
+                    {
+                        LoadFiles(subdirectory, tds);
+                        LoadSubDirectories(subdirectory, tds);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+                // TODO: handle in some way
             }
         }
 
