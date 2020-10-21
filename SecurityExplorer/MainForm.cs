@@ -127,5 +127,35 @@ namespace SecurityExplorer
             else
                 ToolTip.SetToolTip(FileTree, "");
         }
+
+        private void FileTree_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            var color = e.Node.ForeColor;
+            if (color == Color.RoyalBlue)
+            {
+                var di = new DirectoryInfo(e.Node.Tag.ToString()).GetAccessControl();
+                try
+                {
+                    MessageBox.Show(di.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Could not access security info.");
+                }
+            }
+            else if (color == Color.DarkMagenta)
+            {
+                var fi = new FileInfo(e.Node.Tag.ToString());
+                try
+                {
+                    var ac = File.GetAccessControl(e.Node.Tag.ToString());
+                    MessageBox.Show(ac.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All));
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Could not access security info.");
+                }
+            }
+        }
     }
 }
