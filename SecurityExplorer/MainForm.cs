@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace SecurityExplorer
@@ -60,31 +55,33 @@ namespace SecurityExplorer
             var tds = FileTree.Nodes.Add(di.Name);
             tds.Tag = di.FullName;
             tds.StateImageIndex = 0;
+            // TODO: Make colors customizable
             tds.ForeColor = Color.RoyalBlue;
             LoadFiles(Dir, tds);
             LoadSubDirectories(Dir, tds);
         }
 
-        private void LoadFiles(string Dir, TreeNode td)
+        private void LoadFiles(string dir, TreeNode td)
         {
             try
             {
-                var Files = Directory.GetFiles(Dir, "*.*");
-                // var Files = Directory.EnumerateFiles(Dir, "*.*", SearchOption.TopDirectoryOnly);
-                foreach (string file in Files)
+                var files = Directory.GetFiles(dir, "*.*");
+                // var files = Directory.EnumerateFiles(dir, "*.*", SearchOption.TopDirectoryOnly);
+                foreach (string file in files)
                 {
                     var fi = new FileInfo(file);
                     StatusLabel.Text = fi.FullName;
                     Application.DoEvents();
                     var tds = td.Nodes.Add(fi.Name);
                     tds.StateImageIndex = 1;
+                    // TODO: Make colors customizable
                     tds.ForeColor = Color.DarkMagenta;
                     tds.Tag = fi.FullName;
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                // TODO: handle in some way
+                rtbSecurityInfo.Text = "Could not load files. " + dir + " " + ex.Message;
             }
         }
 
@@ -101,6 +98,7 @@ namespace SecurityExplorer
                     var tds = td.Nodes.Add(di.Name);
                     tds.StateImageIndex = 0;
                     tds.Tag = di.FullName;
+                    // TODO: Make colors customizable
                     tds.ForeColor = Color.RoyalBlue;
                     if (!TopLevelOnly.Checked)
                     {
@@ -109,9 +107,9 @@ namespace SecurityExplorer
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                // TODO: handle in some way
+                rtbSecurityInfo.Text = "Could not load subdirectory. " + dir + " " + ex.Message;
             }
         }
 
@@ -130,17 +128,19 @@ namespace SecurityExplorer
 
         private void FileTree_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            // TODO: Currently, this displays raw security info to the screen but we want to pretty it up so it clearly shows what the users, groups and permissions are, plus what is inherited or not
+            // TODO: Find better way to tag files/folders than colors so we can have these be configurable, maybe a value in the treecontrol
             var color = e.Node.ForeColor;
             if (color == Color.RoyalBlue)
             {
                 var di = new DirectoryInfo(e.Node.Tag.ToString()).GetAccessControl();
                 try
                 {
-                    MessageBox.Show(di.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All));
+                    rtbSecurityInfo.Text = di.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Could not access security info.");
+                    rtbSecurityInfo.Text = "Could not access security info. " + ex.Message;
                 }
             }
             else if (color == Color.DarkMagenta)
@@ -149,11 +149,11 @@ namespace SecurityExplorer
                 try
                 {
                     var ac = File.GetAccessControl(e.Node.Tag.ToString());
-                    MessageBox.Show(ac.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All));
+                    rtbSecurityInfo.Text = ac.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Could not access security info.");
+                    rtbSecurityInfo.Text = "Could not access security info. " + ex.Message;
                 }
             }
         }

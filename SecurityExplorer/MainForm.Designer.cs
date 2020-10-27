@@ -45,6 +45,7 @@
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.ImageList = new System.Windows.Forms.ImageList(this.components);
+            this.rtbSecurityInfo = new System.Windows.Forms.RichTextBox();
             this.MenuBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Splitter)).BeginInit();
             this.Splitter.Panel1.SuspendLayout();
@@ -56,12 +57,14 @@
             // 
             // MenuBar
             // 
+            this.MenuBar.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileMenu,
             this.helpToolStripMenuItem});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
-            this.MenuBar.Size = new System.Drawing.Size(1028, 24);
+            this.MenuBar.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
+            this.MenuBar.Size = new System.Drawing.Size(1371, 28);
             this.MenuBar.TabIndex = 1;
             // 
             // FileMenu
@@ -69,14 +72,14 @@
             this.FileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ExitToolStripMenuItem});
             this.FileMenu.Name = "FileMenu";
-            this.FileMenu.Size = new System.Drawing.Size(37, 20);
+            this.FileMenu.Size = new System.Drawing.Size(46, 24);
             this.FileMenu.Text = "File";
             // 
             // ExitToolStripMenuItem
             // 
             this.ExitToolStripMenuItem.Name = "ExitToolStripMenuItem";
             this.ExitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.ExitToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.ExitToolStripMenuItem.Text = "Exit";
             this.ExitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
             // 
@@ -85,19 +88,20 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutSecurityExplorerToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // aboutSecurityExplorerToolStripMenuItem
             // 
             this.aboutSecurityExplorerToolStripMenuItem.Name = "aboutSecurityExplorerToolStripMenuItem";
-            this.aboutSecurityExplorerToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.aboutSecurityExplorerToolStripMenuItem.Size = new System.Drawing.Size(248, 26);
             this.aboutSecurityExplorerToolStripMenuItem.Text = "About Security Explorer";
             // 
             // Splitter
             // 
             this.Splitter.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Splitter.Location = new System.Drawing.Point(0, 24);
+            this.Splitter.Location = new System.Drawing.Point(0, 28);
+            this.Splitter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Splitter.Name = "Splitter";
             // 
             // Splitter.Panel1
@@ -106,18 +110,21 @@
             // 
             // Splitter.Panel2
             // 
+            this.Splitter.Panel2.Controls.Add(this.rtbSecurityInfo);
             this.Splitter.Panel2.Controls.Add(this.Options);
-            this.Splitter.Size = new System.Drawing.Size(1028, 691);
-            this.Splitter.SplitterDistance = 279;
+            this.Splitter.Size = new System.Drawing.Size(1371, 852);
+            this.Splitter.SplitterDistance = 372;
+            this.Splitter.SplitterWidth = 5;
             this.Splitter.TabIndex = 2;
             // 
             // FileTree
             // 
             this.FileTree.Dock = System.Windows.Forms.DockStyle.Fill;
             this.FileTree.Location = new System.Drawing.Point(0, 0);
+            this.FileTree.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FileTree.Name = "FileTree";
             this.FileTree.ShowRootLines = false;
-            this.FileTree.Size = new System.Drawing.Size(279, 691);
+            this.FileTree.Size = new System.Drawing.Size(372, 852);
             this.FileTree.TabIndex = 0;
             this.FileTree.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.FileTree_AfterSelect);
             this.FileTree.MouseMove += new System.Windows.Forms.MouseEventHandler(this.FileTree_MouseMove);
@@ -130,8 +137,10 @@
             this.Options.Controls.Add(this.TopLevelOnly);
             this.Options.Dock = System.Windows.Forms.DockStyle.Top;
             this.Options.Location = new System.Drawing.Point(0, 0);
+            this.Options.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Options.Name = "Options";
-            this.Options.Size = new System.Drawing.Size(745, 74);
+            this.Options.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Options.Size = new System.Drawing.Size(994, 91);
             this.Options.TabIndex = 0;
             this.Options.TabStop = false;
             this.Options.Text = "Options";
@@ -139,9 +148,10 @@
             // Browse
             // 
             this.Browse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Browse.Location = new System.Drawing.Point(453, 18);
+            this.Browse.Location = new System.Drawing.Point(605, 22);
+            this.Browse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Browse.Name = "Browse";
-            this.Browse.Size = new System.Drawing.Size(35, 23);
+            this.Browse.Size = new System.Drawing.Size(47, 28);
             this.Browse.TabIndex = 3;
             this.Browse.Text = "...";
             this.Browse.UseVisualStyleBackColor = true;
@@ -151,19 +161,21 @@
             // 
             this.FolderPath.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.FolderPath.Location = new System.Drawing.Point(48, 19);
+            this.FolderPath.Location = new System.Drawing.Point(64, 23);
+            this.FolderPath.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.FolderPath.Name = "FolderPath";
             this.FolderPath.ReadOnly = true;
-            this.FolderPath.Size = new System.Drawing.Size(399, 20);
+            this.FolderPath.Size = new System.Drawing.Size(532, 22);
             this.FolderPath.TabIndex = 2;
             this.FolderPath.Text = "C:\\";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 23);
+            this.label1.Location = new System.Drawing.Point(8, 28);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.Size = new System.Drawing.Size(37, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "Path";
             // 
@@ -172,9 +184,10 @@
             this.TopLevelOnly.AutoSize = true;
             this.TopLevelOnly.Checked = true;
             this.TopLevelOnly.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TopLevelOnly.Location = new System.Drawing.Point(48, 51);
+            this.TopLevelOnly.Location = new System.Drawing.Point(64, 63);
+            this.TopLevelOnly.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.TopLevelOnly.Name = "TopLevelOnly";
-            this.TopLevelOnly.Size = new System.Drawing.Size(92, 17);
+            this.TopLevelOnly.Size = new System.Drawing.Size(119, 21);
             this.TopLevelOnly.TabIndex = 0;
             this.TopLevelOnly.Text = "Top-level only";
             this.TopLevelOnly.UseVisualStyleBackColor = true;
@@ -182,18 +195,20 @@
             // 
             // StatusBar
             // 
+            this.StatusBar.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusLabel});
-            this.StatusBar.Location = new System.Drawing.Point(0, 693);
+            this.StatusBar.Location = new System.Drawing.Point(0, 854);
             this.StatusBar.Name = "StatusBar";
-            this.StatusBar.Size = new System.Drawing.Size(1028, 22);
+            this.StatusBar.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.StatusBar.Size = new System.Drawing.Size(1371, 26);
             this.StatusBar.TabIndex = 3;
             this.StatusBar.Text = "statusStrip1";
             // 
             // StatusLabel
             // 
             this.StatusLabel.Name = "StatusLabel";
-            this.StatusLabel.Size = new System.Drawing.Size(42, 17);
+            this.StatusLabel.Size = new System.Drawing.Size(53, 20);
             this.StatusLabel.Text = "Ready.";
             // 
             // ImageList
@@ -202,15 +217,26 @@
             this.ImageList.ImageSize = new System.Drawing.Size(16, 16);
             this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // rtbSecurityInfo
+            // 
+            this.rtbSecurityInfo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbSecurityInfo.Location = new System.Drawing.Point(0, 91);
+            this.rtbSecurityInfo.Name = "rtbSecurityInfo";
+            this.rtbSecurityInfo.ReadOnly = true;
+            this.rtbSecurityInfo.Size = new System.Drawing.Size(994, 761);
+            this.rtbSecurityInfo.TabIndex = 1;
+            this.rtbSecurityInfo.Text = "";
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 715);
+            this.ClientSize = new System.Drawing.Size(1371, 880);
             this.Controls.Add(this.StatusBar);
             this.Controls.Add(this.Splitter);
             this.Controls.Add(this.MenuBar);
             this.MainMenuStrip = this.MenuBar;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "MainForm";
             this.Text = "Security Explorer";
             this.MenuBar.ResumeLayout(false);
@@ -246,6 +272,7 @@
         private System.Windows.Forms.CheckBox TopLevelOnly;
         private System.Windows.Forms.ToolTip ToolTip;
         private System.Windows.Forms.ImageList ImageList;
+        private System.Windows.Forms.RichTextBox rtbSecurityInfo;
     }
 }
 
