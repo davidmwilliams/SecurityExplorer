@@ -7,6 +7,11 @@ namespace SecurityExplorer
 {
     public partial class MainForm : Form
     {
+        // TODO: Make colours configurable
+        private Color FileColor = Color.DarkMagenta;
+        private Color DirColor = Color.RoyalBlue;
+
+
         public MainForm()
         {
             InitializeComponent();
@@ -36,6 +41,7 @@ namespace SecurityExplorer
         // Update the hierarchy on the left with the files and folders from the selected path, along with security info
         private void UpdateFileTree()
         {
+            rtbLog.Text = "";
             StatusLabel.Text = "";
             FileTree.Nodes.Clear();
             if ((FolderPath.Text.Trim() != "") && (Directory.Exists(FolderPath.Text)))
@@ -55,10 +61,14 @@ namespace SecurityExplorer
             var tds = FileTree.Nodes.Add(di.Name);
             tds.Tag = di.FullName;
             tds.StateImageIndex = 0;
-            // TODO: Make colors customizable
-            tds.ForeColor = Color.RoyalBlue;
+            tds.ForeColor = DirColor;
             LoadFiles(Dir, tds);
             LoadSubDirectories(Dir, tds);
+        }
+
+        private void Log(string s)
+        {
+            rtbLog.AppendText (DateTime.Now.ToShortTimeString() + ": " + s + Environment.NewLine);
         }
 
         private void LoadFiles(string dir, TreeNode td)
@@ -74,14 +84,13 @@ namespace SecurityExplorer
                     Application.DoEvents();
                     var tds = td.Nodes.Add(fi.Name);
                     tds.StateImageIndex = 1;
-                    // TODO: Make colors customizable
-                    tds.ForeColor = Color.DarkMagenta;
+                    tds.ForeColor = FileColor;
                     tds.Tag = fi.FullName;
                 }
             }
             catch (Exception ex)
             {
-                rtbSecurityInfo.Text = "Could not load files. " + dir + " " + ex.Message;
+               Log ("Could not load files. " + dir + " " + ex.Message);
             }
         }
 
@@ -98,8 +107,7 @@ namespace SecurityExplorer
                     var tds = td.Nodes.Add(di.Name);
                     tds.StateImageIndex = 0;
                     tds.Tag = di.FullName;
-                    // TODO: Make colors customizable
-                    tds.ForeColor = Color.RoyalBlue;
+                    tds.ForeColor = DirColor;
                     if (!TopLevelOnly.Checked)
                     {
                         LoadFiles(subdirectory, tds);
@@ -109,7 +117,7 @@ namespace SecurityExplorer
             }
             catch (Exception ex)
             {
-                rtbSecurityInfo.Text = "Could not load subdirectory. " + dir + " " + ex.Message;
+                Log ("Could not load subdirectory. " + dir + " " + ex.Message);
             }
         }
 
@@ -130,32 +138,46 @@ namespace SecurityExplorer
         {
             // TODO: Currently, this displays raw security info to the screen but we want to pretty it up so it clearly shows what the users, groups and permissions are, plus what is inherited or not
             // TODO: Find better way to tag files/folders than colors so we can have these be configurable, maybe a value in the treecontrol
+
+            var FileOrFolder = e.Node.Tag.ToString();
+            var SecurityInfo = "";
+
             var color = e.Node.ForeColor;
-            if (color == Color.RoyalBlue)
+            if (color == DirColor)
             {
-                var di = new DirectoryInfo(e.Node.Tag.ToString()).GetAccessControl();
                 try
                 {
-                    rtbSecurityInfo.Text = di.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
+                    var di = new DirectoryInfo(FileOrFolder).GetAccessControl();
+                    SecurityInfo = di.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
                 }
                 catch (Exception ex)
                 {
-                    rtbSecurityInfo.Text = "Could not access security info. " + ex.Message;
+                    Log ("Could not access security info. " + ex.Message);
                 }
             }
-            else if (color == Color.DarkMagenta)
+            else if (color == FileColor)
             {
-                var fi = new FileInfo(e.Node.Tag.ToString());
                 try
                 {
-                    var ac = File.GetAccessControl(e.Node.Tag.ToString());
-                    rtbSecurityInfo.Text = ac.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
+                    var ac = File.GetAccessControl(FileOrFolder);
+                    SecurityInfo = ac.GetSecurityDescriptorSddlForm(System.Security.AccessControl.AccessControlSections.All);
                 }
                 catch (Exception ex)
                 {
-                    rtbSecurityInfo.Text = "Could not access security info. " + ex.Message;
+                    Log ("Could not access security info. " + ex.Message);
                 }
             }
+
+            Log(SecurityInfo);
+            DisplaySecurityInfo(FileOrFolder, SecurityInfo);
+        }
+
+        private void DisplaySecurityInfo(string fName, string sInfo)
+        // SDDL format - https://docs.microsoft.com/en-us/windows/win32/secauthz/security-descriptor-string-format
+        // Parse SID strings - https://docs.microsoft.com/en-au/windows/win32/secauthz/sid-strings
+        {
+            txtName.Text = fName;
+            // TODO: parse the SDDL string
         }
     }
 }

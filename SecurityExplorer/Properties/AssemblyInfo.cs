@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SecurityExplorer")]
-[assembly: AssemblyCopyright("Copyright © David M Williams 2020")]
+[assembly: AssemblyCopyright("Copyright © David M Williams 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
