@@ -15,7 +15,7 @@ namespace SecurityExplorer.Tests.Helpers
         }
 
         [TestMethod]
-        public void TestMethodGetDecimalPointPosition_()
+        public void TestMethodGetDecimalPointPosition_WithDecimal()
         {
             Assert.AreEqual(1, CalculationHelper.GetDecimalPointPosition(9.99));
             Assert.AreEqual(2, CalculationHelper.GetDecimalPointPosition(99.09));
