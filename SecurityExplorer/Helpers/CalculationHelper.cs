@@ -42,18 +42,22 @@ namespace SecurityExplorer.Helpers
             size /= Math.Pow(1024.0, power);
             size = Math.Round(size, 2);
 
+            string formattedSize = size % 1 == 0
+                ? size.ToString("F0", CultureInfo.InvariantCulture)
+                : size.ToString("F2", CultureInfo.InvariantCulture);
+
             switch(power)
             {
                 case 0:
-                    return $"{size} B";
+                    return $"{formattedSize} B";
                 case 1:
-                    return $"{size} KB";
+                    return $"{formattedSize} KB";
                 case 2:
-                    return $"{size} MB";
+                    return $"{formattedSize} MB";
                 case 3:
-                    return $"{size} GB";
+                    return $"{formattedSize} GB";
                 case 4:
-                    return $"{size} TB";
+                    return $"{formattedSize} TB";
                 default:
                     throw new ArgumentException(nameof(power));
             }
