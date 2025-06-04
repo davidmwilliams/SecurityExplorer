@@ -5,14 +5,14 @@ namespace SecurityExplorer.Helpers
 {
     public class CalculationHelper
     {
-        private const string Decimal = ".";
+        private const string DecimalSeparator = ".";
 
         public static int GetDecimalPointPosition(double size)
         {
-            string fileSize = $"{$"{Math.Abs(size):F20}".ToString(new CultureInfo("en-US"))}";
-            if(fileSize.Contains(Decimal))
+            string fileSize = Math.Abs(size).ToString("F20", CultureInfo.InvariantCulture);
+            if(fileSize.Contains(DecimalSeparator))
             {
-                return fileSize.IndexOf(Decimal, StringComparison.Ordinal);
+                return fileSize.IndexOf(DecimalSeparator, StringComparison.Ordinal);
             }
 
             return fileSize.Length;
