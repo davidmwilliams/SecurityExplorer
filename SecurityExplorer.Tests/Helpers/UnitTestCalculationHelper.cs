@@ -58,7 +58,7 @@ namespace SecurityExplorer.Tests.Helpers
             //Assert.AreEqual(5, CalculationHelper.GetPowerForFileSize(1125899906842620)); //Petabyte
 
             //Assert.AreEqual(5, CalculationHelper.GetPowerForFileSize(1152921504606849000));
-            //Assert.AreEqual(6, CalculationHelper.GetPowerForFileSize(1152921504606850000)); //Etabyte
+            //Assert.AreEqual(6, CalculationHelper.GetPowerForFileSize(1152921504606850000)); //Exabyte
         }
 
         [TestMethod]
